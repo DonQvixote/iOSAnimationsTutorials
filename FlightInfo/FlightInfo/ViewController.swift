@@ -9,8 +9,8 @@
 import UIKit
 import QuartzCore
 
-func delay(secondes: Double, completion: @escaping () -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + secondes, execute: completion)
+func delay(seconds: Double, completion: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
 }
 
 class ViewController: UIViewController {
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         }
         
         // schedule next flight
-        delay(secondes: 3.0) {
+        delay(seconds: 3.0) {
             self.changeFlight(to: data.isTakingOff ? parisToRome : londonToParis, animated: true)
         }
     }
@@ -198,7 +198,7 @@ class ViewController: UIViewController {
             })
         }, completion: nil)
         
-        delay(secondes: 0.5) {
+        delay(seconds: 0.5) {
             self.summary.text = summaryText
         }
     }
