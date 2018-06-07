@@ -73,6 +73,23 @@ class ViewController: UIViewController {
             self.spinner.center = CGPoint(x: 40.0, y: self.loginButton.frame.size.height / 2)
             self.spinner.alpha = 1.0
         }, completion: nil)
+        
+        let balloon = CALayer()
+        balloon.contents = #imageLiteral(resourceName: "balloon").cgImage
+        balloon.frame = CGRect(x: -50.0, y: 0.0, width: 50.0, height: 65.0)
+        view.layer.insertSublayer(balloon, below: usernameTextField.layer)
+        
+        let flight = CAKeyframeAnimation(keyPath: "position")
+        flight.duration = 12.0
+        flight.values = [
+            CGPoint(x: -50.0, y: 0.0),
+            CGPoint(x: view.frame.width + 50.0, y: 160.0),
+            CGPoint(x: -50.0, y: loginButton.center.y)
+            ].map { NSValue(cgPoint: $0) }
+        flight.keyTimes = [0.0, 0.5, 1.0]
+        
+        balloon.add(flight, forKey: nil)
+        balloon.position = CGPoint(x: -50.0, y: loginButton.center.y)
     }
     
     // MARK: - futher UI
@@ -341,6 +358,13 @@ class ViewController: UIViewController {
             self.loginButton.center.y -= 60.0
             roundCorners(layer: self.loginButton.layer, toRadius: 10.0)
         }
+        
+        let wobble = CAKeyframeAnimation(keyPath: "transform.rotation")
+        wobble.duration = 0.25
+        wobble.repeatCount = 4
+        wobble.values = [0.0, -.pi/4.0, 0.0, .pi/4.0, 0.0]
+        wobble.keyTimes = [0.0, 0.25, 0.5, 0.75, 1.0]
+        heading.layer.add(wobble, forKey: nil)
     }
     
     func animateCloud(_ cloud: UIImageView) {
