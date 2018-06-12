@@ -30,8 +30,10 @@ class MasterViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // add the tap gesture recognizer
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        view.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
+//        view.addGestureRecognizer(tap)
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
+        view.addGestureRecognizer(pan)
         
         // add the logo to the view
         logo.position = CGPoint(x: view.layer.bounds.size.width / 2, y: view.layer.bounds.size.height / 2 - 30)
@@ -43,11 +45,28 @@ class MasterViewController: UIViewController {
     @objc func didTap() {
         performSegue(withIdentifier: "details", sender: nil)
     }
+    
+    @objc func didPan(_ recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            transition.interactive = true
+            performSegue(withIdentifier: "details", sender: nil)
+        default:
+            transition.handlePan(recognizer)
+        }
+    }
 }
 
 extension MasterViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.operation = operation
+        return transition
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        if !transition.interactive {
+            return nil
+        }
         return transition
     }
 }
