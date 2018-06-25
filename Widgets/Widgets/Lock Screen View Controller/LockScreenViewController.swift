@@ -25,6 +25,11 @@ class LockScreenViewController: UIViewController {
     
     var settingsViewController: SettingsViewController!
     
+    var startFrame: CGRect?
+    var previewView: UIView?
+    var previewAnimator: UIViewPropertyAnimator?
+    let previewEffectView = IconEffectView(blur: .extraLight)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,6 +42,8 @@ class LockScreenViewController: UIViewController {
         
         tableView.estimatedRowHeight = 130.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        previewEffectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissMenu)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,9 +84,74 @@ class LockScreenViewController: UIViewController {
             self.tableView.alpha = blurred ? 0.33 : 1.0
         }
     }
+    
+    @objc func dismissMenu() {
+        let reset = AnimatorFactory.reset(frame: startFrame!, view: previewEffectView, blurView: blurView)
+        reset.addCompletion { _ in
+            self.previewEffectView.removeFromSuperview()
+            self.previewView?.removeFromSuperview()
+            self.blurView.isUserInteractionEnabled = false
+        }
+        reset.startAnimation()
+    }
 }
 
-extension LockScreenViewController: WidgetsOwnerProtocol { }
+extension LockScreenViewController: WidgetsOwnerProtocol {
+    func startPreview(for forView: UIView) {
+        previewView?.removeFromSuperview()
+        previewView = forView.snapshotView(afterScreenUpdates: false)
+        view.insertSubview(previewView!, aboveSubview: blurView)
+        previewView?.frame = forView.convert(forView.bounds, to: view)
+        startFrame = previewView?.frame
+        addEffectView(below: previewView!)
+        
+        previewAnimator = AnimatorFactory.grow(view: previewEffectView, blurView: blurView)
+    }
+    
+    func addEffectView(below forView: UIView) {
+        previewEffectView.removeFromSuperview()
+        previewEffectView.frame = forView.frame
+        forView.superview?.insertSubview(previewEffectView, belowSubview: forView)
+    }
+    
+    func updatePreview(percent: CGFloat) {
+        previewAnimator?.fractionComplete = max(0.01, min(0.99, percent))
+    }
+    
+    func cancelPreview() {
+        if let previewAnimator = previewAnimator {
+            previewAnimator.isReversed = true
+            previewAnimator.startAnimation()
+            
+            previewAnimator.addCompletion { position in
+                switch position {
+                case .start:
+                    self.previewView?.removeFromSuperview()
+                    self.previewEffectView.removeFromSuperview()
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    func finishPreview() {
+        // 1
+        previewAnimator?.stopAnimation(false)
+        
+        // 2
+        previewAnimator?.finishAnimation(at: .end)
+        
+        // 3
+        previewAnimator = nil
+        
+        AnimatorFactory.complete(view: previewEffectView).startAnimation()
+        
+        blurView.effect = UIBlurEffect(style: .dark)
+        blurView.isUserInteractionEnabled = true
+        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissMenu)))
+    }
+}
 
 extension LockScreenViewController:  UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
