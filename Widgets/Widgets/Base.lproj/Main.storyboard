@@ -350,7 +350,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2E6-Fq-P1V" firstAttribute="trailing" secondItem="ioD-q5-UK0" secondAttribute="trailing" id="7BS-R1-6nN"/>
                             <constraint firstItem="2E6-Fq-P1V" firstAttribute="leading" secondItem="ioD-q5-UK0" secondAttribute="leading" id="BO9-Df-QT6"/>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E06FB7420E0D7900055B4C1 /* PresentTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E06FB7320E0D7900055B4C1 /* PresentTransition.swift */; };
 		0EB799AF20D8F1B400F73763 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB799AE20D8F1B400F73763 /* AppDelegate.swift */; };
 		0EB799B420D8F1B400F73763 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EB799B220D8F1B400F73763 /* Main.storyboard */; };
 		0EB799B620D8F1B500F73763 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EB799B520D8F1B500F73763 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E06FB7320E0D7900055B4C1 /* PresentTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentTransition.swift; sourceTree = "<group>"; };
 		0EB799AB20D8F1B300F73763 /* Widgets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Widgets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EB799AE20D8F1B400F73763 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EB799B320D8F1B400F73763 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				0EB799C020D8F25900F73763 /* Lock Screen View Controller */,
 				0EB799C320D8F5F600F73763 /* Settings View Controller */,
 				0EB799D420D9F23200F73763 /* AnimatorFactory.swift */,
+				0E06FB7320E0D7900055B4C1 /* PresentTransition.swift */,
 				0EB799AE20D8F1B400F73763 /* AppDelegate.swift */,
 				0EB799B220D8F1B400F73763 /* Main.storyboard */,
 				0EB799B520D8F1B500F73763 /* Assets.xcassets */,
@@ -187,6 +190,7 @@
 				0EB799D520D9F23200F73763 /* AnimatorFactory.swift in Sources */,
 				0EB799C920D8F83100F73763 /* WidgetsOwnerProtocol.swift in Sources */,
 				0EB799CB20D8F9E400F73763 /* WidgetCell.swift in Sources */,
+				0E06FB7420E0D7900055B4C1 /* PresentTransition.swift in Sources */,
 				0EB799CF20D8FC8800F73763 /* IconCell.swift in Sources */,
 				0EB799CD20D8FA8600F73763 /* WidgetView.swift in Sources */,
 				0EB799C220D8F2AE00F73763 /* LockScreenViewController.swift in Sources */,
